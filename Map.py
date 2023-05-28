@@ -2,27 +2,35 @@ import pygame
 import numpy as np
 
 class Map:
-    def __init__(self, length, width, tileAmt):
-        self.length = length
+    def __init__(self, height, width, tileAmt):
+        self.height = height
         self.width = width
         self.tileAmt = tileAmt
         self.currentTile = 0
         self.tileBlueprints = [self.loadtile(i) for i in range(self.tileAmt)]
 
     def updateCurrentTile(self, player):
+        L_Tiles = [i * self.width for i in range(0, self.height)]
+        R_Tiles = [(i * self.width) - 1 for i in range(1, self.height + 1)]
+        U_Tiles = []
+        D_Tiles = []
         if player.x < 0:
-            player.x = 0
-            if self.currentTile != 0:
+            if self.currentTile not in L_Tiles:
                 self.currentTile -= 1
-                player.x = 480
-        if player.x > 480:
-            self.currentTile += 1
-            player.x = 0
+                player.x = 420
+            else:
+                player.x = 0
+        if player.x > 420:
+            if self.currentTile not in R_Tiles:
+                self.currentTile += 1
+                player.x = 0
+            else:
+                player.x = 420
         if player.y < 0:
-            self.currentTile -= 3
+            self.currentTile -= self.width
             player.y = 480
         if player.y > 480:
-            self.currentTile += 3
+            self.currentTile += self.width
             player.y = 0
 
     def loadtile(self, tileNum):

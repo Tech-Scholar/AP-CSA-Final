@@ -16,14 +16,14 @@ def main():
     clock = pygame.time.Clock()
     running = True
     player = Player(3, 3)
-    map = Map(1, 1, 4)
+    board = Map(2, 3, 6)
     while running:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        player.update(map, pygame.key.get_pressed())
-        map.createtile(screen)
+        player.update(board, pygame.key.get_pressed())
+        board.createtile(screen)
         player.draw(screen)
         pygame.display.update()
     pygame.quit()
