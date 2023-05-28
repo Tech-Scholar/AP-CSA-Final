@@ -23,7 +23,7 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
         player.update(board, pygame.key.get_pressed())
-        board.createtile(screen)
+        board.createTile(screen)
         player.draw(screen)
         pygame.display.update()
     pygame.quit()
