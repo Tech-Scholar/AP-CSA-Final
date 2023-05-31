@@ -1,5 +1,8 @@
 import pygame
 import numpy as np
+from ObstacleTypes.Dirt import Dirt
+from ObstacleTypes.Grass import Grass
+
 
 class Map:
     def __init__(self, height, width, tileAmt):
@@ -51,9 +54,11 @@ class Map:
         for i in self.tileBlueprints[self.currentTile]:
             for j in i:
                 if j == 0:
-                    pygame.draw.rect(screen, 'brown', pygame.Rect(x, y, 60, 60))
+                    dirt_tile = Dirt(x, y)
+                    dirt_tile.draw(screen)
                 if j == 1:
-                    pygame.draw.rect(screen, 'green', pygame.Rect(x, y, 60, 60))
+                    grass_tile = Grass(x, y)
+                    grass_tile.draw(screen)
                 x += 60
             x = 0
             y += 60
