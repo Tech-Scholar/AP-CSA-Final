@@ -43,7 +43,7 @@ class Map:
                 player.y = 420
 
     def loadtile(self, tileNum):
-        data = open(f"tile#{tileNum}.csv")
+        data = open(f"Tiles/tile#{tileNum}.csv")
         return np.loadtxt(data, delimiter=",")
 
     def blueprints(self):
