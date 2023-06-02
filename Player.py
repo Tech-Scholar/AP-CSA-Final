@@ -10,30 +10,38 @@ from pygame.locals import (
 
 class Player:
     def __init__(self, x, y):
-        self.x = x * 60
-        self.y = y * 60
         self.image = pygame.image.load("Images/player_front.png")
-
-    def moveX(self, x):
-        self.x += x
-
-    def moveY(self, y):
-        self.y += y
+        self.rect = self.image.get_rect(topleft=(x * 60, y * 60))
 
     def draw(self, screen):
-        screen.blit(self.image, pygame.Rect(self.x, self.y, 60, 60))
+        screen.blit(self.image, self.rect)
+
+    def check_and_move(self, map, change, xOrY):
+        x, y = self.rect.x, self.rect.y
+        if xOrY == "x":
+            x += change
+        elif xOrY == "y":
+            y += change
+        test_dummy = pygame.Rect(x, y, 60, 60)
+        checker = True
+        for i in map.collidable:
+            if pygame.Rect.colliderect(i.rect, test_dummy) is True:
+                checker = False
+        if checker:
+            self.rect.x = x
+            self.rect.y = y
 
     def update(self, map, keys):
         if keys[K_UP]:
             self.image = pygame.image.load("Images/player_back.png")
-            self.moveY(-60)
+            self.check_and_move(map, -60, "y")
         elif keys[K_DOWN]:
             self.image = pygame.image.load("Images/player_front.png")
-            self.moveY(60)
+            self.check_and_move(map, 60, "y")
         elif keys[K_RIGHT]:
             self.image = pygame.image.load("Images/player_right.png")
-            self.moveX(60)
+            self.check_and_move(map, 60, "x")
         elif keys[K_LEFT]:
             self.image = pygame.image.load("Images/player_left.png")
-            self.moveX(-60)
+            self.check_and_move(map, -60, "x")
         map.updateCurrentTile(self)
