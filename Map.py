@@ -36,8 +36,9 @@ class Map:
                 self.currentTile -= self.width
                 player.rect.y = 420
             else:
-                player.y = 0
+                player.rect.y = 0
         if player.rect.y > 420:
+            print('yes')
             if self.currentTile not in self.D_Tiles:
                 self.currentTile += self.width
                 player.rect.y = 0
