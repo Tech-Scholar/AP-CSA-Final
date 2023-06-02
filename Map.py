@@ -2,6 +2,7 @@ import pygame
 import numpy as np
 from ObstacleTypes.Dirt import Dirt
 from ObstacleTypes.Grass import Grass
+from ObstacleTypes.NPC import NPC
 
 
 class Map:
@@ -59,6 +60,9 @@ class Map:
                 if j == 1:
                     grass_tile = Grass(x, y)
                     grass_tile.draw(screen)
+                if j == 2:
+                    npc = NPC(x, y)
+                    npc.draw(screen)
                 x += 60
             x = 0
             y += 60
