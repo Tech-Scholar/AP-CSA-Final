@@ -48,7 +48,7 @@ class Player:
             self.check_and_move(tile, -60, "x")
         tile.updateCurrentTile(self)
 
-    #Fix later
+    #Fix later now
     def interact(self, tile):
         for i in range(0, 4):
             for j in range(-60, 61, 60):
