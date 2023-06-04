@@ -1,4 +1,3 @@
-import pygame
 import numpy as np
 from ObstacleTypes.Dirt import Dirt
 from ObstacleTypes.Grass import Grass
@@ -12,7 +11,7 @@ class Map:
         self.tileAmt = tileAmt
         self.currentTile = 0
         self.collidable = []
-        self.tileBlueprints = [self.loadtile(i) for i in range(self.tileAmt)]
+        self.tileBlueprints = [self.load_tile(i) for i in range(self.tileAmt)]
         self.L_Tiles = [i * self.width for i in range(0, self.height)]
         self.R_Tiles = [(i * self.width) - 1 for i in range(1, self.height + 1)]
         self.U_Tiles = [i for i in range(0, self.width)]
@@ -38,14 +37,13 @@ class Map:
             else:
                 player.rect.y = 0
         if player.rect.y > 420:
-            print('yes')
             if self.currentTile not in self.D_Tiles:
                 self.currentTile += self.width
                 player.rect.y = 0
             else:
                 player.rect.y = 420
 
-    def loadtile(self, tileNum):
+    def load_tile(self, tileNum):
         data = open(f"Tiles/tile#{tileNum}.csv")
         return np.loadtxt(data, delimiter=",")
 

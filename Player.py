@@ -16,32 +16,46 @@ class Player:
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
-    def check_and_move(self, map, change, xOrY):
+    def hit_test(self, tile, x, y):
+        test_dummy = pygame.Rect(x, y, 60, 60)
+        for i in tile.collidable:
+            if pygame.Rect.colliderect(i.rect, test_dummy) is True:
+                return i
+        return None
+
+    def check_and_move(self, tile, change, xOrY):
         x, y = self.rect.x, self.rect.y
         if xOrY == "x":
             x += change
         elif xOrY == "y":
             y += change
-        test_dummy = pygame.Rect(x, y, 60, 60)
-        checker = True
-        for i in map.collidable:
-            if pygame.Rect.colliderect(i.rect, test_dummy) is True:
-                checker = False
-        if checker:
+        if self.hit_test(tile, x, y) is None:
             self.rect.x = x
             self.rect.y = y
 
-    def update(self, map, keys):
+    def update(self, tile, keys):
         if keys[K_UP]:
             self.image = pygame.image.load("Images/player_back.png")
-            self.check_and_move(map, -60, "y")
+            self.check_and_move(tile, -60, "y")
         elif keys[K_DOWN]:
             self.image = pygame.image.load("Images/player_front.png")
-            self.check_and_move(map, 60, "y")
+            self.check_and_move(tile, 60, "y")
         elif keys[K_RIGHT]:
             self.image = pygame.image.load("Images/player_right.png")
-            self.check_and_move(map, 60, "x")
+            self.check_and_move(tile, 60, "x")
         elif keys[K_LEFT]:
             self.image = pygame.image.load("Images/player_left.png")
-            self.check_and_move(map, -60, "x")
-        map.updateCurrentTile(self)
+            self.check_and_move(tile, -60, "x")
+        tile.updateCurrentTile(self)
+
+    def interact(self, tile):
+        for i in range(0, 4):
+            for j in range(-60, 61, 60):
+                pass
+
+        above, below = self.hit_test(tile, -60, "y"), self.hit_test(tile, 60, "y")
+        right, left = self.hit_test(tile, 60, "x"), self.hit_test(tile, -60, "x")
+
+
+
+
