@@ -5,6 +5,7 @@ from pygame.locals import (
     K_DOWN,
     K_LEFT,
     K_RIGHT,
+    K_p
 )
 
 
@@ -46,17 +47,17 @@ class Player:
         elif keys[K_LEFT]:
             self.image = pygame.image.load("Images/player_left.png")
             self.check_and_move(tile, -60, "x")
+        elif keys[K_p]:
+            self.interact(tile)
         tile.updateCurrentTile(self)
 
     #Fix later now
     def interact(self, tile):
-        for i in range(0, 4):
-            for j in range(-60, 61, 60):
-                pass
-
-        above, below = self.hit_test(tile, -60, "y"), self.hit_test(tile, 60, "y")
-        right, left = self.hit_test(tile, 60, "x"), self.hit_test(tile, -60, "x")
-
+        for i in range(-60, 60, 60):
+            for j in range(-60, 60, 60):
+                check = self.hit_test(tile, self.rect.x+i, self.rect.y+j)
+                if check is not None:
+                    check.interact(tile)
 
 
 

@@ -16,7 +16,7 @@ def main():
     clock = pygame.time.Clock()
     running = True
     player = Player(3, 3)
-    board = Map(3, 3, 9)
+    board = Map(screen, 3, 3, 9)
     while running:
         clock.tick(FPS)
         for event in pygame.event.get():

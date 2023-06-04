@@ -5,7 +5,8 @@ from ObstacleTypes.NPC import NPC
 
 
 class Map:
-    def __init__(self, height, width, tileAmt):
+    def __init__(self, screen, height, width, tileAmt):
+        self.screen = screen
         self.height = height
         self.width = width
         self.tileAmt = tileAmt
