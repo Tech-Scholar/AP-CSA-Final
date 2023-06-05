@@ -52,8 +52,8 @@ class Player:
         tile.updateCurrentTile(self, eventList)
 
     def interact(self, tile, eventList):
-        for i in range(-60, 60, 60):
-            for j in range(-60, 60, 60):
+        for i in range(-60, 61, 60):
+            for j in range(-60, 61, 60):
                 check = self.hit_test(tile, self.rect.x+i, self.rect.y+j)
                 if check is not None:
                     check.interact(eventList)
