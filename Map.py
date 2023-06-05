@@ -18,29 +18,33 @@ class Map:
         self.U_Tiles = [i for i in range(0, self.width)]
         self.D_Tiles = [i + self.width * (self.height - 1) for i in range(0, self.width)]
 
-    def updateCurrentTile(self, player):
+    def updateCurrentTile(self, player, eventList):
         if player.rect.x < 0:
             if self.currentTile not in self.L_Tiles:
                 self.currentTile -= 1
                 player.rect.x = 420
+                eventList.clear_all()
             else:
                 player.rect.x = 0
         if player.rect.x > 420:
             if self.currentTile not in self.R_Tiles:
                 self.currentTile += 1
                 player.rect.x = 0
+                eventList.clear_all()
             else:
                 player.rect.x = 420
         if player.rect.y < 0:
             if self.currentTile not in self.U_Tiles:
                 self.currentTile -= self.width
                 player.rect.y = 420
+                eventList.clear_all()
             else:
                 player.rect.y = 0
         if player.rect.y > 420:
             if self.currentTile not in self.D_Tiles:
                 self.currentTile += self.width
                 player.rect.y = 0
+                eventList.clear_all()
             else:
                 player.rect.y = 420
 
@@ -51,20 +55,20 @@ class Map:
     def blueprints(self):
         return self.tileBlueprints
 
-    def create_tile(self, screen):
+    def create_tile(self):
         x, y = 0, 0
         for i in self.tileBlueprints[self.currentTile]:
             for j in i:
                 if j == 0:
                     dirt_tile = Dirt(x, y)
-                    dirt_tile.draw(screen)
+                    dirt_tile.draw(self.screen)
                 if j == 1:
                     grass_tile = Grass(x, y)
-                    grass_tile.draw(screen)
+                    grass_tile.draw(self.screen)
                 if j == 2:
                     npc = NPC(x, y)
                     self.collidable.append(npc)
-                    npc.draw(screen)
+                    npc.draw(self.screen)
                 x += 60
             x = 0
             y += 60

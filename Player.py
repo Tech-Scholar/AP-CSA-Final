@@ -34,7 +34,7 @@ class Player:
             self.rect.x = x
             self.rect.y = y
 
-    def update(self, tile, keys):
+    def update(self, tile, keys, eventList):
         if keys[K_UP]:
             self.image = pygame.image.load("Images/player_back.png")
             self.check_and_move(tile, -60, "y")
@@ -48,16 +48,15 @@ class Player:
             self.image = pygame.image.load("Images/player_left.png")
             self.check_and_move(tile, -60, "x")
         elif keys[K_p]:
-            self.interact(tile)
-        tile.updateCurrentTile(self)
+            self.interact(tile, eventList)
+        tile.updateCurrentTile(self, eventList)
 
-    #Fix later now
-    def interact(self, tile):
+    def interact(self, tile, eventList):
         for i in range(-60, 60, 60):
             for j in range(-60, 60, 60):
                 check = self.hit_test(tile, self.rect.x+i, self.rect.y+j)
                 if check is not None:
-                    check.interact(tile)
+                    check.interact(eventList)
 
 
 
