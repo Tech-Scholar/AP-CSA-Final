@@ -14,7 +14,7 @@ class EventList:
 
     def clear_all(self):
         self.eventList.clear()
-
+    #
     def draw_events(self):
         for i in self.eventList:
             i.draw(self.screen)
