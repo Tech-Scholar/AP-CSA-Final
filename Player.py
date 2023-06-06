@@ -1,4 +1,6 @@
 import pygame
+import os
+
 
 from pygame.locals import (
     K_UP,
@@ -11,7 +13,8 @@ from pygame.locals import (
 
 class Player:
     def __init__(self, x, y):
-        self.image = pygame.image.load("Images/player_front.png")
+        self.path = os.path.dirname(__file__)
+        self.image = pygame.image.load(f"{self.path}/Images/player_front.png")
         self.rect = self.image.get_rect(topleft=(x * 60, y * 60))
 
     def draw(self, screen):
@@ -36,16 +39,16 @@ class Player:
 
     def update(self, tile, keys, eventList):
         if keys[K_UP]:
-            self.image = pygame.image.load("Images/player_back.png")
+            self.image = pygame.image.load(f"{self.path}/Images/player_back.png")
             self.check_and_move(tile, -60, "y")
         elif keys[K_DOWN]:
-            self.image = pygame.image.load("Images/player_front.png")
+            self.image = pygame.image.load(f"{self.path}/Images/player_front.png")
             self.check_and_move(tile, 60, "y")
         elif keys[K_RIGHT]:
-            self.image = pygame.image.load("Images/player_right.png")
+            self.image = pygame.image.load(f"{self.path}/Images/player_right.png")
             self.check_and_move(tile, 60, "x")
         elif keys[K_LEFT]:
-            self.image = pygame.image.load("Images/player_left.png")
+            self.image = pygame.image.load(f"{self.path}/Images/player_left.png")
             self.check_and_move(tile, -60, "x")
         elif keys[K_p]:
             self.interact(tile, eventList)
@@ -55,7 +58,7 @@ class Player:
         for i in range(-60, 61, 60):
             for j in range(-60, 61, 60):
                 check = self.hit_test(tile, self.rect.x+i, self.rect.y+j)
-                if check is not None:
+                if check is not None and check.interactable:
                     check.interact(eventList)
 
 

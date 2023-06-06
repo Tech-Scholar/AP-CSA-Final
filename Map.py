@@ -2,11 +2,12 @@ import numpy as np
 from ObstacleTypes.Walking_Tiles import Dirt, Grass
 from ObstacleTypes.NPC import NPC
 from ObstacleTypes.Special_Image import House
-
+import os
 
 class Map:
     def __init__(self, screen, height, width, tileAmt):
         self.screen = screen
+        self.path = open("path.txt").readline()
         self.height = height
         self.width = width
         self.tileAmt = tileAmt
@@ -49,7 +50,7 @@ class Map:
                 player.rect.y = 420
 
     def load_tile(self, tileNum):
-        data = open(f"Tiles/tile#{tileNum}.csv")
+        data = open(f"{self.path}/Tiles/tile#{tileNum}.csv")
         return np.loadtxt(data, delimiter=",")
 
     def blueprints(self):

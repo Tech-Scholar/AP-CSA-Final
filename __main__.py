@@ -2,6 +2,7 @@ import pygame
 from Map import Map
 from Player import Player
 from Events import EventList
+import os
 
 pygame.init()
 
@@ -12,6 +13,11 @@ screen = pygame.display.set_mode((WIDTH, LENGTH))
 pygame.display.set_caption("RPG")
 FPS = 10
 
+
+def path_finder():
+    path = os.path.dirname(__file__)
+    with open("path.txt", "w") as f:
+        f.write(path)
 
 def main():
     clock = pygame.time.Clock()
@@ -33,4 +39,6 @@ def main():
 
 
 if __name__ == '__main__':
+    path_finder()
     main()
+    os.remove("path.txt")
