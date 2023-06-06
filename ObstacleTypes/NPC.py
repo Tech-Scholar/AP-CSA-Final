@@ -1,4 +1,3 @@
-import pygame
 from ObstacleTypes.Obstacle import Obstacle
 from Events import *
 

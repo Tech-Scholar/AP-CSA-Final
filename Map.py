@@ -1,7 +1,7 @@
 import numpy as np
-from ObstacleTypes.Dirt import Dirt
-from ObstacleTypes.Grass import Grass
+from ObstacleTypes.Walking_Tiles import Dirt, Grass
 from ObstacleTypes.NPC import NPC
+from ObstacleTypes.Special_Image import House
 
 
 class Map:
@@ -69,6 +69,10 @@ class Map:
                     npc = NPC(x, y)
                     self.collidable.append(npc)
                     npc.draw(self.screen)
+                if j == 3:
+                    house = House(x, y)
+                    self.collidable.append(house)
+                    house.draw(self.screen)
                 x += 60
             x = 0
             y += 60
