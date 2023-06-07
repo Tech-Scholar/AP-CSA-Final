@@ -24,6 +24,7 @@ class Map:
             if self.currentTile not in self.L_Tiles:
                 self.currentTile -= 1
                 player.rect.x = 420
+                self.collidable.clear()
                 eventList.clear_all()
             else:
                 player.rect.x = 0
@@ -31,6 +32,7 @@ class Map:
             if self.currentTile not in self.R_Tiles:
                 self.currentTile += 1
                 player.rect.x = 0
+                self.collidable.clear()
                 eventList.clear_all()
             else:
                 player.rect.x = 420
@@ -38,6 +40,7 @@ class Map:
             if self.currentTile not in self.U_Tiles:
                 self.currentTile -= self.width
                 player.rect.y = 420
+                self.collidable.clear()
                 eventList.clear_all()
             else:
                 player.rect.y = 0
@@ -45,6 +48,7 @@ class Map:
             if self.currentTile not in self.D_Tiles:
                 self.currentTile += self.width
                 player.rect.y = 0
+                self.collidable.clear()
                 eventList.clear_all()
             else:
                 player.rect.y = 420
