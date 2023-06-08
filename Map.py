@@ -1,8 +1,7 @@
 import numpy as np
 from ObstacleTypes.Walking_Tiles import Dirt, Grass
-from ObstacleTypes.NPC import NPC
+from ObstacleTypes.Interactable_Objects import NPC, QuestNPC, Giver, Spaceship
 from ObstacleTypes.Special_Image import House
-import os
 
 class Map:
     def __init__(self, screen, height, width, tileAmt):
@@ -78,6 +77,34 @@ class Map:
                     house = House(x, y)
                     self.collidable.append(house)
                     house.draw(self.screen)
+                if j == 4:
+                    spaceship = Spaceship(x, y)
+                    self.collidable.append(spaceship)
+                    spaceship.draw(self.screen)
+                if j == 5:
+                    npc = QuestNPC(x, y, "I want an apple for a wrench", "apple", "wrench")
+                    self.collidable.append(npc)
+                    npc.draw(self.screen)
+                if j == 6:
+                    tree = Giver(x, y, "apple_tree", "apple")
+                    self.collidable.append(tree)
+                    tree.draw(self.screen)
+                if j == 7:
+                    npc = QuestNPC(x, y, "I want water for a screw", "water", "screw")
+                    self.collidable.append(npc)
+                    npc.draw(self.screen)
+                if j == 8:
+                    water = Giver(x, y, "well", "water")
+                    self.collidable.append(water)
+                    water.draw(self.screen)
+                if j == 9:
+                    npc = QuestNPC(x, y, "I want an orange for a hammer", "orange", "hammer")
+                    self.collidable.append(npc)
+                    npc.draw(self.screen)
+                if j == 10:
+                    water = Giver(x, y, "orange_tree", "orange")
+                    self.collidable.append(water)
+                    water.draw(self.screen)
                 x += 60
             x = 0
             y += 60

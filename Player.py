@@ -13,7 +13,8 @@ from pygame.locals import (
 
 class Player:
     def __init__(self, x, y):
-        self.path = os.path.dirname(__file__)
+        self.path = open("path.txt").readline()
+        self.inventory = []
         self.image = pygame.image.load(f"{self.path}/Images/player_front.png")
         self.rect = self.image.get_rect(topleft=(x * 60, y * 60))
 
@@ -59,7 +60,7 @@ class Player:
             for j in range(-60, 61, 60):
                 check = self.hit_test(tile, self.rect.x+i, self.rect.y+j)
                 if check is not None and check.interactable:
-                    check.interact(eventList)
+                    check.interact(eventList, self)
 
 
 

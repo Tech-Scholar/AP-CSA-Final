@@ -9,7 +9,7 @@ class Obstacle:
         self.y = y
         self.path = os.path.dirname(__file__)
         self.version = version
-        self.rect = pygame.Rect(self.x, self.y,width, height)
+        self.rect = pygame.Rect(self.x, self.y, width, height)
         self.image = image
         self.collidable = collidable
         self.interactable = interactable
