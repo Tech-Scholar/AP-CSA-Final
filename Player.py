@@ -1,39 +1,66 @@
 import pygame
+import os
+
 
 from pygame.locals import (
     K_UP,
     K_DOWN,
     K_LEFT,
     K_RIGHT,
+    K_p
 )
 
 
 class Player:
     def __init__(self, x, y):
-        self.x = x * 60
-        self.y = y * 60
-        self.image = pygame.image.load("Images/player_front.png")
-
-    def moveX(self, x):
-        self.x += x
-
-    def moveY(self, y):
-        self.y += y
+        self.path = open("path.txt").readline()
+        self.inventory = []
+        self.image = pygame.image.load(f"{self.path}/Images/player_front.png")
+        self.rect = self.image.get_rect(topleft=(x * 60, y * 60))
 
     def draw(self, screen):
-        screen.blit(self.image, pygame.Rect(self.x, self.y, 60, 60))
+        screen.blit(self.image, self.rect)
 
-    def update(self, map, keys):
+    def hit_test(self, tile, x, y):
+        test_dummy = pygame.Rect(x, y, 60, 60)
+        for i in tile.collidable:
+            if pygame.Rect.colliderect(i.rect, test_dummy) is True:
+                return i
+        return None
+
+    def check_and_move(self, tile, change, xOrY):
+        x, y = self.rect.x, self.rect.y
+        if xOrY == "x":
+            x += change
+        elif xOrY == "y":
+            y += change
+        if self.hit_test(tile, x, y) is None:
+            self.rect.x = x
+            self.rect.y = y
+
+    def update(self, tile, keys, eventList):
         if keys[K_UP]:
-            self.image = pygame.image.load("Images/player_back.png")
-            self.moveY(-60)
+            self.image = pygame.image.load(f"{self.path}/Images/player_back.png")
+            self.check_and_move(tile, -60, "y")
         elif keys[K_DOWN]:
-            self.image = pygame.image.load("Images/player_front.png")
-            self.moveY(60)
+            self.image = pygame.image.load(f"{self.path}/Images/player_front.png")
+            self.check_and_move(tile, 60, "y")
         elif keys[K_RIGHT]:
-            self.image = pygame.image.load("Images/player_right.png")
-            self.moveX(60)
+            self.image = pygame.image.load(f"{self.path}/Images/player_right.png")
+            self.check_and_move(tile, 60, "x")
         elif keys[K_LEFT]:
-            self.image = pygame.image.load("Images/player_left.png")
-            self.moveX(-60)
-        map.updateCurrentTile(self)
+            self.image = pygame.image.load(f"{self.path}/Images/player_left.png")
+            self.check_and_move(tile, -60, "x")
+        elif keys[K_p]:
+            self.interact(tile, eventList)
+        tile.updateCurrentTile(self, eventList)
+
+    def interact(self, tile, eventList):
+        for i in range(-60, 61, 60):
+            for j in range(-60, 61, 60):
+                check = self.hit_test(tile, self.rect.x+i, self.rect.y+j)
+                if check is not None and check.interactable:
+                    check.interact(eventList, self)
+
+
+
